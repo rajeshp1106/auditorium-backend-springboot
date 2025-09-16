@@ -8,11 +8,11 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.booking</groupId>
-	<artifactId>auditorium</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Auditorium Booking System</name>
-	<description>Audotorium Booking Management System</description>
+    <groupId>com.game</groupId>
+    <artifactId>project</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>LevelUp</name>
+	<description>Auditorium Booking Management System</description>
 	<url/>
 	<licenses>
 		<license/>
