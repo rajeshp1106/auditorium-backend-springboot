@@ -18,7 +18,7 @@ WORKDIR /app
 COPY --from=build /app/target/project-0.0.1-SNAPSHOT.jar project.jar
 
 # Expose port
-EXPOSE 8090
+EXPOSE 8080
 
 # Secrets will come from Render environment variables
 ENV SECRET_KEY=${SECRET_KEY}
