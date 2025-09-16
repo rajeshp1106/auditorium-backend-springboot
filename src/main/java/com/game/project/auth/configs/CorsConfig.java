@@ -14,7 +14,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://frontend-auditorium.vercel.app,"https://auditorium-management.vercel.app","http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("https://frontend-auditorium.vercel.app","https://auditorium-management.vercel.app","http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true); // needed if you send cookies or Authorization header
