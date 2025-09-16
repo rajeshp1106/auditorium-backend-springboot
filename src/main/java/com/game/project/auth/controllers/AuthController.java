@@ -1,9 +1,6 @@
 package com.game.project.auth.controllers;
 
-import com.game.project.auth.dtos.LoginRequest;
-import com.game.project.auth.dtos.OtpVerificationRequest;
-import com.game.project.auth.dtos.ResendOtpRequest;
-import com.game.project.auth.dtos.SignupRequest;
+import com.game.project.auth.dtos.*;
 import com.game.project.auth.models.User;
 import com.game.project.auth.repositories.UserRepository;
 import com.game.project.auth.services.AuthService;
@@ -60,6 +57,27 @@ public class AuthController {
         return authService.login(request);
 
 //        return ResponseEntity.ok("Login successful");
+    }
+
+    @PostMapping("/forgot/password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request){
+        authService.getOtp(request.getEmail());
+        return ResponseEntity.ok("OTP is sent to the email if account exists");
+    }
+
+    @PostMapping("/verify/password-otp")
+    public ResponseEntity<String> verifyPasswordOtp(@RequestBody OtpVerificationRequest request){
+        boolean valid = authService.verifyPasswordOtp(request.getEmail(),request.getOtp());
+        if(valid){
+            return ResponseEntity.ok("OTP has been verified");
+        }
+        return ResponseEntity.badRequest().body("Invalid OTP");
+    }
+
+    @PostMapping("/reset/password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request){
+        authService.resetPassword(request.getEmail(),request.getNewPassword());
+        return ResponseEntity.ok("Password successfully reset");
     }
 
 

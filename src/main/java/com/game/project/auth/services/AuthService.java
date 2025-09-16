@@ -179,4 +179,45 @@ public class AuthService {
             userRepository.save(user);
         }
     }
+
+    public void getOtp(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!user.getIsVerified()) {
+            throw new RuntimeException("User email is not verified. Please verify before resetting password.");
+        }
+
+        String otp = String.format("%06d",new Random().nextInt(999999));
+        LocalDateTime expiry = LocalDateTime.now().plusMinutes(2);
+        user.setOtp(otp);
+        user.setOtpExpiry(expiry);
+        userRepository.save(user);
+        emailService.sendEmail(user.getEmail(),"Forgot Password OTP","Password Reset OTP, Your OTP is:"+otp);
+    }
+
+    public boolean verifyPasswordOtp(String email, String otp) {
+        User  user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!user.getIsVerified()) {
+            throw new RuntimeException("User email is not verified.");
+        }
+        return user.getOtp()!=null && user.getOtp().equals(otp) && user.getOtpExpiry().isAfter(LocalDateTime.now());
+    }
+
+    public void resetPassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (!user.getIsVerified()) {
+            throw new RuntimeException("User email is not verified.");
+
+        }
+
+        user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        user.setOtp(null);
+        user.setOtpExpiry(null);
+        userRepository.save(user);
+
+    }
 }
