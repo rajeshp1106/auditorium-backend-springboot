@@ -14,6 +14,7 @@ RUN mvn clean package -DskipTests
 # Run stage
 FROM eclipse-temurin:21-jdk AS run
 WORKDIR /app
-COPY --from=build /target/project-0.0.1-SNAPSHOT.jar project.jar
+COPY --from=build /app/target/*.jar project.jar
+
 EXPOSE 8090
 ENTRYPOINT ["java","-jar","project.jar"]
