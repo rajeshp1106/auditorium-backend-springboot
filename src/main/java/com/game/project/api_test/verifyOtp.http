@@ -1,0 +1,7 @@
+POST localhost:8090/api/v1/auth/verify-otp
+Content-Type: application/json
+
+{
+  "email": "rajeshcmr19@gmail.com",
+  "otp": "247766"
+}

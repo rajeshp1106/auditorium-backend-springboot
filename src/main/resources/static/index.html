@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditorium Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50">
+
+<!-- ===== Navigation ===== -->
+<nav class="bg-white shadow-sm">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <!-- Auditorium Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7 text-yellow-500">
+                <path d="M12 2c-1.1 0-2 .9-2 2v6c0 2.21-1.79 4-4 4H4v2h2c3.31 0 6-2.69 6-6V4c0-1.1-.9-2-2-2zm8 2c-1.1 0-2 .9-2 2v4c0 2.21-1.79 4-4 4h-2v2h2c3.31 0 6-2.69 6-6V6c0-1.1-.9-2-2-2z"/>
+            </svg>
+            <span class="text-xl sm:text-2xl font-bold text-gray-800">Auditorium Booking</span>
+        </div>
+        <div class="flex gap-4">
+            <a href="auth/login.html" class="text-gray-700 hover:text-yellow-600 font-medium cursor-pointer">Login</a>
+            <a href="auth/register.html" class="text-gray-700 hover:text-yellow-600 font-medium cursor-pointer">Register</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== Hero Section ===== -->
+<section class="flex-grow flex flex-col justify-center items-center text-center px-6 py-24 bg-gradient-to-b from-white to-gray-100">
+    <h1 class="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-4 max-w-3xl">
+        Book Auditoriums Effortlessly
+    </h1>
+    <p class="text-gray-700 text-lg sm:text-xl max-w-2xl mb-8">
+        Centralized booking system for auditoriums. Manage events, avoid scheduling clashes, and stay organized.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a href="auth/register.html" class="bg-yellow-400 text-gray-900 px-6 py-3 rounded shadow font-semibold hover:bg-yellow-500 transition cursor-pointer">
+            Get Started
+        </a>
+        <a href="auth/login.html" class="border-2 border-yellow-400 text-gray-900 px-6 py-3 rounded shadow hover:bg-yellow-100 transition cursor-pointer">
+            Already have an account
+        </a>
+    </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="bg-white text-center py-6 text-gray-600 shadow-inner mt-auto">
+    &copy; 2025 Auditorium Booking System. All rights reserved.
+</footer>
+
+</body>
+</html>

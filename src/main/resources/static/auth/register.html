@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Auditorium Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen px-4">
+
+<div class="bg-white p-8 rounded shadow-md w-full max-w-md border-t-4 border-yellow-400">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Register</h2>
+
+    <input id="regEmail" type="email" placeholder="Email"
+           class="mb-4 p-3 border rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-300">
+    <input id="regUsername" type="text" placeholder="Username"
+           class="mb-4 p-3 border rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-300">
+    <input id="regPass" type="password" placeholder="Password"
+           class="mb-4 p-3 border rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-300">
+
+    <button id="registerBtn"
+            class="bg-yellow-400 text-gray-900 py-2 rounded w-full font-semibold hover:bg-yellow-500 transition">
+        Register
+    </button>
+
+    <p class="mt-4 text-center text-gray-600 text-sm">
+        Already have an account? <a href="login.html" class="text-yellow-500 hover:underline">Login</a>
+    </p>
+</div>
+
+<!-- Toast container -->
+<div id="toastContainer" class="fixed top-5 right-5 flex flex-col gap-2 z-50"></div>
+
+<script>
+    const API_BASE = 'http://localhost:8090/api/v1/auth'; // NO trailing slash
+
+
+    // Show toast
+    function showToast(message, type='success') {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.className = `px-4 py-2 rounded shadow text-white ${
+            type==='success' ? 'bg-green-500' : 'bg-red-500'
+        } animate-slide-in`;
+        document.getElementById('toastContainer').appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('opacity-0');
+            setTimeout(() => toast.remove(), 500);
+        }, 3000);
+    }
+
+    // Handle register click
+    document.getElementById('registerBtn').onclick = async () => {
+        const email = document.getElementById('regEmail').value.trim();
+        const username = document.getElementById('regUsername').value.trim();
+        const password = document.getElementById('regPass').value.trim();
+
+        if (!email || !username || !password) {
+            showToast('All fields are required', 'error');
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE}/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, username, password })
+});
+
+const text = await res.text(); // read body once
+let data;
+try {
+    data = JSON.parse(text);
+} catch {
+    data = { message: text };
+}
+
+if(res.ok){
+    showToast(data.message || 'Registered successfully! Redirecting to OTP...');
+    setTimeout(() => {
+        window.location.href = 'verify-otp.html?email=' + encodeURIComponent(email);
+    }, 1500);
+} else {
+    showToast(data.error || data.message || 'Registration failed', 'error');
+}
+
+        } catch (err) {
+            showToast('Server error. Try again later.', 'error');
+            console.error(err);
+        }
+    };
+</script>
+
+<style>
+    /* Toast slide animation */
+    @keyframes slide-in {
+        0% { transform: translateX(100%); opacity:0; }
+        100% { transform: translateX(0); opacity:1; }
+    }
+    .animate-slide-in {
+        animation: slide-in 0.3s ease forwards;
+    }
+</style>
+</body>
+</html>
